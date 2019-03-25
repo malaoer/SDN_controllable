@@ -1,0 +1,17 @@
+# -*-coding:utf-8-*-
+
+1、流表策略与防火墙策略存在冲突
+    1>冲突原理
+        a -> b      drop
+
+        a  -> c     set(a => a')
+        a' -> c     set(c => b)
+        a' -> b     forward
+
+    2>现有解决办法
+        # 别名集
+        a  -> c     set(a => a')    (a,a')(c)
+        a' -> c     set(c => b)     (a,a')(c,b)
+        a' -> b     forward         (a,a')(c,b)
+
+       缺点：存在误报的情况
